@@ -111,8 +111,6 @@ end
 
 
 class Station
-
-
   attr_reader :name
 
 
@@ -141,29 +139,27 @@ class Station
     number = 0
     train_list =[]
     for x in @station_trains
-      if type_train == @station_trains.mode
-        train_list += @station_trains
+     if type_train == x.mode
+        train_list += [x]
         number += 1
       end
     end
-    @train_list.each { |train| return train  }
+    train_list.each {|train| return train}
     return number
-    @train_list.each { |train| puts train  }
-    puts number
   end
-
 end
 
 
-train111=Train.new("train111","грузовой",30)
-train112=Train.new("train112","пасажирский",30)
-train113=Train.new("train113","грузовой",30)
-train114=Train.new("train114","пасажирский",30)
-
+train111=Train.new("111","грузовой",30)
+train112=Train.new("112","пасажирский",30)
+train113=Train.new("113","грузовой",30)
+train114=Train.new("114","пасажирский",30)
+station111=Station.new("567")
 station111.staying_train(train111)
 station111.staying_train(train112)
 station111.staying_train(train113)
 station111.staying_train(train114)
+station111.list_train_type("грузовой")
 
 =begin
  train111=Train.new("train111","грузовой",30)
