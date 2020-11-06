@@ -67,6 +67,7 @@ class Train
         return @wagon
       else
         puts "вагонов больше нет"
+      end
     else
       puts 'Поезд на ходу!!! сбавьте скорость до 0!!!'
     end
@@ -83,27 +84,27 @@ class Train
 
 
   def train_up # перемещение вперед НЕ УЧИТЫВАЛОСЬ ЧТО ЗНАЧЕНИЕ ПРИВЫСИТ ПОРОГ
-    @route[@number_station].waning_train(@number)
+    @route[@number_station].waning_train(self)
     if @number_station == (@route.length - 1)
       puts 'дальше ехать вы не можете'
     else
       @number_station += 1
       puts 'вы прибыли в конечную точку маршрута' if @number_station == (@route.length - 1)
     end
-    @route[@number_station].staying_train(@number)
+    @route[@number_station].staying_train(self)
     return @route[@number_station]
   end
 
 
   def train_down # перемещение назад
-    @route[@number_station].waning_train(@number)
+    @route[@number_station].waning_train(self)
     if @number_station.zero?
       puts 'назад ехать вы не можете'
     else
       @number_station -= 1
       puts 'вы прибыли в начальную точку маршрута' if @number_station.zero?
     end
-    @route[@number_station].staying_train(@number)
+    @route[@number_station].staying_train(self)
     return @route[@number_station]
   end
 
@@ -153,28 +154,34 @@ class Station
     @stationTrains.each { |name| puts "Номер поезда- № #{name.number}. Тип поезда - #{name.mode}  ." }
   end
 end
+=begin
+ train111=Train.new("train111","грузовой",30)
+ train112=Train.new("train112","пасажирский",30)
+ train113=Train.new("train113","грузовой",30)
+ train114=Train.new("train114","пасажирский",30)
+ station111=Station.new("Станция 1")
+ station222=Station.new("Станция 2")
+ station333=Station.new("Станция 3")
+ station444=Station.new("Станция 4")
+ station555=Station.new("Станция 5")
+ station666=Station.new("Станция 6") # ЧТО ДОЛЖНО БЫТЬ ТУТ ВМЕСТО ИМЕНИ ПОЕЗДА ???
+ station111.staying_train(train111)
+ station111.staying_train(train112)
+ station111.staying_train(train113)
+ station111.staying_train(train114)
+ station111.result
+ route1=Route.new(station111,station666)
+ route1.intermediate_station(station333)
+ route1.intermediate_station(station444)
+ route1.delete_station(station333)
 
-# train111=Train.new("111","грузовой",30)
-# train112=Train.new("112","пасажирский",30)
-# train113=Train.new("113","грузовой",30)
-# train114=Train.new("114","пасажирский",30)
-# station111=Station.new("Станция 1")
-# station222=Station.new("Станция 2")
-# station333=Station.new("Станция 3")
-# station444=Station.new("Станция 4")
-# station555=Station.new("Станция 5")
-# station666=Station.new("Станция 6") # ЧТО ДОЛЖНО БЫТЬ ТУТ ВМЕСТО ИМЕНИ ПОЕЗДА ???
-# station111.staying_train(train111)
-# station111.staying_train(train112)
-# station111.staying_train(train113)
-# station111.staying_train(train114)
-# station111.result
-# route1=Route.new(station111,station666)
-# route1.intermediate_station(station333)
-# route1.intermediate_station(station444)
-# route1.delete_station(station333)
-#
-# train111.train_route(route1.route)
-# train111.train_up
-# train111.train_up
-# train111.train_down
+ train111.train_route(route1.route)
+ train111.train_up
+ station111.result
+ station444.result
+ station666.result
+ train111.train_up
+ station666.result
+ train111.train_down
+ station444.result
+ =end
