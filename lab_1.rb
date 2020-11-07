@@ -74,7 +74,7 @@ class Train
   end
 
   def next_station
-    if (@number_station + 1) < @route.length
+    if (@number_station + 1) < @route.route.length
       return @route[@number_station + 1]
     end
   end
