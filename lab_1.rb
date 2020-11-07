@@ -120,12 +120,12 @@ class Station
   end
 
 
-  def staying_train(name)
+  def add_train(name)
     @station_trains += [name]
   end
 
 
-  def waning_train(name)
+  def remove_train(name)
     @station_trains -= [name]
   end
 
