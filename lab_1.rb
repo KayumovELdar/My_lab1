@@ -11,7 +11,7 @@ class Route
     @station.insert(-2, station)
   end
 
-  def delete_station(station) # удаление станции
+  def delete_station(station)
     @station.delete(station)
   end
 end
@@ -20,23 +20,23 @@ end
 class Train
   attr_reader :number, :type
 
-  def initialize(number, type, wagon) # номер тип транспорта число вагонов
+  def initialize(number, type, wagon)
     @number = number
-    @mode = mode
+    @type = type
     @wagon = wagon
     @speed = 0
   end
 
-  def speed_change(num) # меняем скорость на любое значение, при отрицательном значение скорость 0
+  def speed_change(num)
     @speed += num
     @speed = 0 if @speed.negative?
   end
 
-  def wagon_sum # повышаем число вагонов
+  def wagon_sum
     @wagon += 1 if @speed.zero?
   end
 
-  def wagon_del # понижаем число вагонов
+  def wagon_del
     @wagon -= 1 if @speed.zero? && @wagon > 0
   end
 
@@ -47,15 +47,15 @@ class Train
   end
 
   def train_up
-    return if @current_station == @route.start_station
+    return if @current_station == @route.finish_station
 
     @current_station.remove_train(self)
     @current_station = next_station
     @current_station.add_train(self)
   end
 
-  def train_down # перемещение назад
-    return if @current_station == @route.finish_station
+  def train_down
+    return if @current_station == @route.start_station
 
     @current_station.remove_train(self)
     @current_station = finish_station
@@ -65,13 +65,13 @@ class Train
   def next_station
     return @current_station if @current_station == @route.finish_station
 
-    @route.stations[@route.stations.index(@current_station) + 1]
+    @route.station[@route.station.index(@current_station) + 1]
   end
 
   def previous_station
     return @current_station if @current_station == @route.start_station
 
-    @route.stations[@route.stations.index(@current_station) - 1]
+    @route.station[@route.station.index(@current_station) - 1]
   end
 end
 
@@ -80,7 +80,7 @@ class Station
   attr_reader :train
 
   def initialize(train)
-    @name = name
+    @train = train
     @station_trains = []
   end
 
@@ -93,10 +93,11 @@ class Station
   end
 
   def list_train
+    @station_trains.each { |train| puts train }
     @station_trains.each { |train| return train }
   end
 
   def list_train_type(type_train)
-    @station_trains.filter { |train| train.type = type_train }
+    @station_trains.filter { |train| train.type == type_train }
   end
 end
