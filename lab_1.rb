@@ -93,7 +93,6 @@ class Station
   end
 
   def list_train
-    @station_trains.each { |train| puts train }
     @station_trains.each { |train| return train }
   end
 
