@@ -1,30 +1,26 @@
 class Route
-  attr_reader :route, :start_station, :finish_station
+  attr_reader :station, :start_station, :finish_station
 
   def initialize(start_station, finish_station) # начало и конец маршрута
     @start_station = start_station
     @finish_station = finish_station
-    @route = [@start_station, @finish_station]
+    @station = [@start_station, @finish_station]
   end
 
-  def intermediate_station(name)
-    @route.insert(-2, name)
+  def intermediate_station(station)
+    @station.insert(-2, station)
   end
 
-  def delete_station(name) # удаление станции
-    @route.delete(name)
-  end
-
-  def list_station
-    @route.each { |station| return station }
+  def delete_station(station) # удаление станции
+    @station.delete(station)
   end
 end
 
 
 class Train
-  attr_reader :number, :mode
+  attr_reader :number, :type
 
-  def initialize(number, mode, wagon) # номер тип транспорта число вагонов
+  def initialize(number, type, wagon) # номер тип транспорта число вагонов
     @number = number
     @mode = mode
     @wagon = wagon
@@ -46,66 +42,61 @@ class Train
 
   def train_route(route)
     @route = route
-    @number_station = 0
-    @route.route[@number_station].add_train(self)
+    @current_station = route.start_station
+    @current_station.add_train(self)
   end
 
   def train_up
-    @route.route[@number_station].remove_train(self)
-    next_station
-    @route.route[@number_station].add_train(self)
+    return if @current_station == @route.start_station
+
+    @current_station.remove_train(self)
+    @current_station = next_station
+    @current_station.add_train(self)
   end
 
   def train_down # перемещение назад
-    @route.route[@number_station].remove_train(self)
-    previous_station
-    @route.route[@number_station].add_train(self)
+    return if @current_station == @route.finish_station
+
+    @current_station.remove_train(self)
+    @current_station = finish_station
+    @current_station.add_train(self)
   end
 
   def next_station
-    return @number_station if @route.route[@number_station] == @route.finish_station
+    return @current_station if @current_station == @route.finish_station
 
-    @number_station += 1
+    @route.stations[@route.stations.index(@current_station) + 1]
   end
 
   def previous_station
-    return @number_station if @route.route[@number_station] == @route.start_station
+    return @current_station if @current_station == @route.start_station
 
-    @number_station -= 1
+    @route.stations[@route.stations.index(@current_station) - 1]
   end
 end
 
 
 class Station
-  attr_reader :name
+  attr_reader :train
 
-  def initialize(name)
+  def initialize(train)
     @name = name
     @station_trains = []
   end
 
-  def add_train(name)
-    @station_trains += [name]
+  def add_train(train)
+    @station_trains += [train]
   end
 
-  def remove_train(name)
-    @station_trains -= [name]
+  def remove_train(train)
+    @station_trains -= [train]
   end
 
   def list_train
-    @station_trains.each { |name| return name }
+    @station_trains.each { |train| return train }
   end
 
   def list_train_type(type_train)
-    number = 0
-    train_list = []
-    @station_trains.each do |x|
-      if type_train == x.mode
-        train_list += [x]
-        number += 1
-      end
-    end
-    train_list.each { |train| return train }
-    number
+    @station_trains.filter { |train| train.type = type_train }
   end
 end
