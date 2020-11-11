@@ -14,7 +14,6 @@ class Main
   end
 
   def menu
-    @run_1 = true
     print "1. Ввод станции \n"\
     "2. Ввод подезда\n"\
     "3. Составления маршрута\n"\
@@ -23,7 +22,7 @@ class Main
     "6. конец программы\n"\
     "\n"\
     "Введите ключ\n"
-    while @run_1
+    loop do
       print "Главное меню\n"\
       'namber_key ='
       namber_key = gets.chomp.to_i
@@ -33,7 +32,7 @@ class Main
       when 3 then create_routs
       when 4 then menu_train
       when 5 then list
-      when 6 then @run_1 = false
+      when 6 then break
       else
         puts 'данного ключа не сушествует'
       end
@@ -41,7 +40,6 @@ class Main
   end
 
   def menu_train
-    @run_2 = true
     puts 'введите поезд'
     @train_name = gets.chomp
     check_name(@train_name)
@@ -53,7 +51,7 @@ class Main
     "5. конец программы\n"\
     "\n"\
     "Введите ключ\n"
-    while @run_2
+  loop do
       print "меню поезда\n"\
       'namber_key ='
       namber_key = gets.chomp.to_i
@@ -62,7 +60,7 @@ class Main
       when 2 then wagon_for_train
       when 3 then delete_wagon
       when 4 then train_start
-      when 5 then @run_2 = false
+      when 5 then break
       else
         puts 'данного ключа не сушествует'
       end
