@@ -14,6 +14,8 @@ class Route
   def delete_station(station)
     @station.delete(station)
   end
+
   private
+
   attr_writer :station, :start_station, :finish_station
 end

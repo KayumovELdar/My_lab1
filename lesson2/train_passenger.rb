@@ -1,5 +1,5 @@
-require_relative 'train.rb'
-require_relative 'wagon_passenger.rb'
+require_relative 'train'
+require_relative 'wagon_passenger'
 
 class TrainPassenger < Train
   def initialize

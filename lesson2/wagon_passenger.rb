@@ -1,4 +1,4 @@
-require_relative 'wagon.rb'
+require_relative 'wagon'
 
 class WagonPassenger < Wagon
   def initialize
