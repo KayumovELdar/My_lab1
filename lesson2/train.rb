@@ -12,7 +12,7 @@ class Train
   end
 
   def wagon_sum(wagon)
-    @wagon_list << wagon if speed.zero?
+    @wagon_list << wagon if speed.zero? && self.type==wagon.type
   end
 
   def wagon_del
