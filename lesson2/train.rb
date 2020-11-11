@@ -1,10 +1,8 @@
 class Train
-  attr_reader :number, :type
+  attr_reader :number, :type, :wagon_list
 
-  def initialize(number, type, wagon)
+  def initialize(number)
     @number = number
-    @type = type
-    @wagon = wagon
     @speed = 0
   end
 
@@ -13,12 +11,12 @@ class Train
     @speed = 0 if @speed.negative?
   end
 
-  def wagon_sum
-    @wagon += 1 if @speed.zero?
+  def wagon_sum(wagon)
+    @wagon_list << wagon if speed.zero?
   end
 
   def wagon_del
-    @wagon -= 1 if @speed.zero? && @wagon > 0
+    @wagon_list.pop if speed.zero?
   end
 
   def train_route(route)
@@ -42,6 +40,10 @@ class Train
     @current_station = finish_station
     @current_station.add_train(self)
   end
+
+  private
+
+  attr_writer :number, :type, :wagon_list
 
   def next_station
     return @current_station if @current_station == @route.finish_station
