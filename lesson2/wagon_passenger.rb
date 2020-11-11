@@ -1,7 +1,7 @@
 require_relative 'wagon'
 
 class WagonPassenger < Wagon
-  def initialize
+  def type
     :passenger
   end
 end

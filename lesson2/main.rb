@@ -2,13 +2,14 @@ require_relative 'train'
 require_relative 'station'
 require_relative 'routs'
 require_relative 'train_cargo'
+require_relative 'train'
 require_relative 'train_passenger'
-require_relative 'wagom_cargo'
+require_relative 'wagon'
 require_relative 'wagon_passenger'
 class Main
   def initialize
     @train = {}
-    @station = {}
+    @stations = {}
     @routs = {}
   end
 
@@ -23,11 +24,12 @@ class Main
     "\n"\
     "Введите ключ\n"
     while @run_1
-      print 'namber_key ='
-      namber_key = gets.chomp
+      print "Главное меню\n"\
+      "namber_key ="
+      namber_key = gets.chomp.to_i
       case namber_key
       when 1 then create_station
-      when 2 then cteate_train
+      when 2 then create_trains
       when 3 then create_routs
       when 4 then menu_train
       when 5 then list
@@ -39,8 +41,9 @@ class Main
   end
 
   def menu_train
+    @run_2=true
     puts 'введите поезд'
-    name_t = gets.chomp
+     @train_name= gets.chomp
     check_name(name_t)
 
     print "1. Назначить маршрут для поезда\n"\
@@ -51,8 +54,9 @@ class Main
     "\n"\
     "Введите ключ\n"
     while @run_2
+      print "меню поезда\n"\
       print 'namber_key ='
-      namber_key = gets.chomp
+      namber_key = gets.chomp.to_i
       case namber_key
       when 1 then routs_for_train
       when 2 then wagon_for_train
@@ -69,20 +73,19 @@ class Main
     puts 'введите имя станции'
     name = gets.chomp
     check_name(name)
-    include_name(name, st)
-    @station[name] = Station.new(name)
+    @stations[name] = Station.new(name)
+    puts @stations[name]
   end
 
-  def create_train
+  def create_trains
     puts 'введите имя поезда'
     name = gets.chomp
     check_name(name)
-    include_name(name, st)
     print "1. создать грузовой поезд \n"\
     "2. создать пасажирский поезд\n"\
 
     print 'namber_key ='
-    namber_key = gets.chomp
+    namber_key = gets.chomp.to_i
     case namber_key
     when 1 then @train[name] = TrainPassenger.new(name)
     when 2 then @train[name] = TrainCargo.new(name)
@@ -95,31 +98,31 @@ class Main
     puts 'введите маршрута'
     name = gets.chomp
     check_name(name)
-    include_name(name, st)
     puts 'введите начальную станцию'
     start = gets.chomp
-    check_name(name)
-    include_name(name, st)
+    check_name(start)
+    puts @stations[start]
+
     puts 'введите конечную станцию'
     finish = gets.chomp
-    check_name(name)
-    include_name(name, st)
-    @routs[name] = Routs.new(start, finish)
+    check_name(finish)
+    puts @stations[finish]
+    @routs[name] = Route.new(@stations[start], @stations[finish])
   end
 
-  def routs_for_train(name_t)
+  def routs_for_train
     puts 'введите маршрут'
     name_r = gets.chomp
     check_name(name_r)
-    @train[name_t].train_route = @routs[name_r].station
+    @train[@train_name].train_route = @routs[name_r].station
   end
 
-  def wagon_for_train(name_t)
-    case @train[name_t].class
+  def wagon_for_train
+    case @train[@train_name].class
     when :TrainPassenger
-      @trains[args[0]].add_wagon(WagonPassenger.new)
+      @trains[@train_name].add_wagon(WagonPassenger.new)
     when :TrainCargo
-      @trains[args[0]].add_wagon(WagonCargo.new)
+      @trains[@train_name].add_wagon(WagonCargo.new)
     else
       puts 'данного ключа не существует'
     end
@@ -134,7 +137,7 @@ class Main
     "2. перемещение назад\n"\
 
     print 'namber_key ='
-    namber_key = gets.chomp
+    namber_key = gets.chomp.to_i
     case namber_key
     when 1 then @train[name_t].train_up
     when 2 then @train[name_t].train_down
@@ -149,11 +152,11 @@ class Main
     "3 вывести список всех маршрутов\n"\
 
     print 'namber_key ='
-    namber_key = gets.chomp
+    namber_key = gets.chomp.to_i
     case namber_key
-    when 1 then @train.each { |x| return x }
-    when 2 then @station.each { |x| return x }
-    when 3 then @routs.each { |x| return x }
+    when 1 then @train.each { |x| puts x }
+    when 2 then @stations.each { |x| puts x }
+    when 3 then @routs.each { |x| puts x }
     else
       puts 'неверный ключ'
     end
@@ -167,3 +170,6 @@ class Main
     return puts "значение #{name} существует" if st.include? name1
   end
 end
+
+man=Main.new
+man.menu
