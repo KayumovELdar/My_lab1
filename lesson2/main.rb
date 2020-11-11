@@ -1,6 +1,10 @@
 require_relative 'train.rb'
 require_relative 'station.rb'
 require_relative 'routs.rb'
+require_relative 'train_cargo.rb'
+require_relative 'train_passenger.rb'
+require_relative 'wagom_cargo.rb'
+require_relative 'wagon_passenger.rb'
 class Main
 
   def initialize
@@ -145,7 +149,7 @@ class Main
     print "1 вывести список всех поездов\n"\
     "2 вывести список всех станций\n"\
     "3 вывести список всех маршрутов\n"\
-    
+
     print "namber_key ="
     namber_key = gets.chomp
     case namber_key
