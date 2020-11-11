@@ -25,7 +25,7 @@ class Main
     "Введите ключ\n"
     while @run_1
       print "Главное меню\n"\
-      "namber_key ="
+      'namber_key ='
       namber_key = gets.chomp.to_i
       case namber_key
       when 1 then create_station
@@ -41,10 +41,10 @@ class Main
   end
 
   def menu_train
-    @run_2=true
+    @run_2 = true
     puts 'введите поезд'
-     @train_name= gets.chomp
-    check_name(name_t)
+    @train_name = gets.chomp
+    check_name(@train_name)
 
     print "1. Назначить маршрут для поезда\n"\
     "2. Добавление вагона к поезду\n"\
@@ -55,7 +55,7 @@ class Main
     "Введите ключ\n"
     while @run_2
       print "меню поезда\n"\
-      print 'namber_key ='
+      'namber_key ='
       namber_key = gets.chomp.to_i
       case namber_key
       when 1 then routs_for_train
@@ -81,8 +81,8 @@ class Main
     puts 'введите имя поезда'
     name = gets.chomp
     check_name(name)
-    print "1. создать грузовой поезд \n"\
-    "2. создать пасажирский поезд\n"\
+    print "1. создать пасажирский поезд\n"\
+    "2. создать грузовой поезд \n"\
 
     print 'namber_key ='
     namber_key = gets.chomp.to_i
@@ -114,15 +114,16 @@ class Main
     puts 'введите маршрут'
     name_r = gets.chomp
     check_name(name_r)
-    @train[@train_name].train_route = @routs[name_r].station
+    @train[@train_name].train_route(@routs[name_r].station_list)
   end
 
   def wagon_for_train
-    case @train[@train_name].class
-    when :TrainPassenger
-      @trains[@train_name].add_wagon(WagonPassenger.new)
-    when :TrainCargo
-      @trains[@train_name].add_wagon(WagonCargo.new)
+    puts @train[@train_name].type
+    case @train[@train_name].type
+    when :passenger
+      @trains[@train_name].wagon_sum(WagonPassenger.new)
+    when :cargo
+      @trains[@train_name].wagon_sum(WagonCargo.new)
     else
       puts 'данного ключа не существует'
     end
@@ -171,5 +172,5 @@ class Main
   end
 end
 
-man=Main.new
+man = Main.new
 man.menu
