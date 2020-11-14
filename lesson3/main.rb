@@ -51,7 +51,7 @@ class Main
     "5. конец программы\n"\
     "\n"\
     "Введите ключ\n"
-  loop do
+    loop do
       print "меню поезда\n"\
       'namber_key ='
       namber_key = gets.chomp.to_i

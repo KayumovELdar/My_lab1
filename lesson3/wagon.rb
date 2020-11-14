@@ -1,5 +1,5 @@
 require_relative 'modules'
 
-class Wagon;
-include Manufacturer
- end
+class Wagon
+  include Manufacturer
+end

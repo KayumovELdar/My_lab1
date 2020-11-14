@@ -2,17 +2,18 @@ require_relative 'instance_counter'
 
 class Station
   attr_reader :station
+
   include InstanceCounter
-  @@station_list=[]
+  @@station_list = []
 
   def self.all
-   @@station_list
+    @@station_list
   end
 
   def initialize(station)
     @station = station
     @station_trains = []
-     @@stations_list << self
+    @@stations_list << self
     register_instance
   end
 

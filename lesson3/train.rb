@@ -3,12 +3,13 @@ require_relative 'modules'
 
 class Train
   attr_reader :number, :type, :wagon_list
+
   include InstanceCounter
   include Manufacturer
-  @@train_list=[]
+  @@train_list = []
 
   def self.find(number_train)
-    @@train_list.filter { |train| train.number ==number_train  }
+    @@train_list.filter { |train| train.number == number_train }
   end
 
   def initialize(number)
@@ -24,7 +25,7 @@ class Train
   end
 
   def wagon_sum(wagon)
-    @wagon_list << wagon if speed.zero? && self.type==wagon.type
+    @wagon_list << wagon if speed.zero? && type == wagon.type
   end
 
   def wagon_del
