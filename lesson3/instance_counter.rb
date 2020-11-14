@@ -5,20 +5,21 @@ module InstanceCounter
   end
 
   module ClassMethods
-    attr_writer :number_class
-
     def instances
-      @number_class
+      @number_class||=0
+    end
+
+    def increase_instance_counter
+      instances
+      @number_class+= 1
     end
   end
 
   module InstanceMethods
     private
 
-    @@number = 0
     def register_instance
-      @@number += 1
-      self.class.number_class = @@number
+      self.class.increase_instance_counter
     end
   end
 end
