@@ -5,12 +5,17 @@ class Train
   attr_reader :number, :type, :wagon_list
   include InstanceCounter
   include Manufacturer
+  @@train_list=[]
+
+  def self.find(number_train)
+    @@train_list.filter { |train| train.number ==number_train  }
+  end
+
   def initialize(number)
     @number = number
     @speed = 0
+    @@train_list << self
     register_instance
-    d
-    d
   end
 
   def speed_change(num)

@@ -1,3 +1,5 @@
+require_relative 'instance_counter'
+
 class Route
   attr_reader :station_list, :start_station, :finish_station
   include InstanceCounter
@@ -5,6 +7,7 @@ class Route
     @start_station = start_station
     @finish_station = finish_station
     @station_list = [@start_station, @finish_station]
+    register_instance
   end
 
   def intermediate_station(station)
