@@ -1,9 +1,16 @@
+require_relative 'instance_counter'
+require_relative 'modules'
+
 class Train
   attr_reader :number, :type, :wagon_list
-
+  include InstanceCounter
+  include Manufacturer
   def initialize(number)
     @number = number
     @speed = 0
+    register_instance
+    d
+    d
   end
 
   def speed_change(num)

@@ -1,6 +1,6 @@
 class Station
   attr_reader :train
-
+  include InstanceCounter
   def initialize(train)
     @train = train
     @station_trains = []
