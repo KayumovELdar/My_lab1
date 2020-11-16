@@ -4,6 +4,8 @@ require_relative 'modules'
 class Train
   attr_reader :number, :type, :wagon_list
 
+  NUMBER_FORMAT = /^[0-9a-zA-Z]{3}(_+\d{2})*/
+
   include InstanceCounter
   include Manufacturer
   @@train_list = []
@@ -14,9 +16,23 @@ class Train
 
   def initialize(number)
     @number = number
+    validate!
     @speed = 0
     @@train_list << self
     register_instance
+  end
+
+  def valid?
+    validate!
+    true
+  rescue
+    false # возвращаем false, если было исключение
+  end
+
+  def validate!
+      raise "Введено пустое значение" if number.nil?
+      raise "Введено меньше 3 символов " if number.length < 3
+      raise "Не соответствие формату xxx_xx" if number !~ NUMBER_FORMAT
   end
 
   def speed_change(num)

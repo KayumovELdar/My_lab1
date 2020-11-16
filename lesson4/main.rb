@@ -70,7 +70,6 @@ class Main
   def create_station
     puts 'введите имя станции'
     name = gets.chomp
-    check_name(name)
     @stations[name] = Station.new(name)
     puts @stations[name]
   end
@@ -78,7 +77,6 @@ class Main
   def create_trains
     puts 'введите имя поезда'
     name = gets.chomp
-    check_name(name)
     print "1. создать пасажирский поезд\n"\
     "2. создать грузовой поезд \n"\
 
@@ -95,15 +93,12 @@ class Main
   def create_routs
     puts 'введите маршрута'
     name = gets.chomp
-    check_name(name)
     puts 'введите начальную станцию'
     start = gets.chomp
-    check_name(start)
     puts @stations[start]
 
     puts 'введите конечную станцию'
     finish = gets.chomp
-    check_name(finish)
     puts @stations[finish]
     @routs[name] = Route.new(@stations[start], @stations[finish])
   end
@@ -159,14 +154,6 @@ class Main
     else
       puts 'неверный ключ'
     end
-  end
-
-  def check_name(name)
-    return puts 'значение пустое' if name.nil?
-  end
-
-  def include_name(name, st)
-    return puts "значение #{name} существует" if st.include? name1
   end
 end
 
