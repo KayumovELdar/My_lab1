@@ -2,7 +2,7 @@ require_relative 'instance_counter'
 
 class Station
   attr_reader :station
-  STATION_FORMAT=^[A-Z]
+  STATION_FORMAT=/^[A-Z]/
 
   include InstanceCounter
   @@station_list = []

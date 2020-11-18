@@ -11,6 +11,7 @@ class Main
     @train = {}
     @stations = {}
     @routs = {}
+    @wagon ={}
   end
 
   def menu
@@ -85,6 +86,24 @@ class Main
     case namber_key
     when 1 then @train[name] = TrainPassenger.new(name)
     when 2 then @train[name] = TrainCargo.new(name)
+    else
+      print 'данного ключа не существует'
+    end
+  end
+
+  def create_wagon
+    puts 'введите имя вагона'
+    name = gets.chomp
+    puts 'введите объем вагона или число мест'
+    arg = gets.chomp
+    print "1. создать пасажирский вагон\n"\
+    "2. создать грузовой вагон \n"\
+
+    print 'namber_key ='
+    namber_key = gets.chomp.to_i
+    case namber_key
+    when 1 then @wagon[name] = WagonPassenger.new(name,arg)
+    when 2 then @wagon[name] = WagonCargo.new(name,arg)
     else
       print 'данного ключа не существует'
     end
