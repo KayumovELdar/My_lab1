@@ -19,7 +19,12 @@ class Train
     validate!
     @speed = 0
     @@train_list << self
+    @wagon_list=[]
     register_instance
+  end
+
+  def on_wagon
+     @wagon_list.each { |wagon| yield(wagon) }
   end
 
   def valid?

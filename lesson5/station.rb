@@ -19,6 +19,10 @@ class Station
     register_instance
   end
 
+  def on_trains
+     @station_trains.each { |train| yield(train) }
+  end
+
   def valid?
     validate!
     true

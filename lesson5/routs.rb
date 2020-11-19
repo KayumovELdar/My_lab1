@@ -12,6 +12,10 @@ class Route
     register_instance
   end
 
+  def on_station
+     @station_list.each { |station| yield(station) }
+  end
+
   def valid?
     validate!
     true
