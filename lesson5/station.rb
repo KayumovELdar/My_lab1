@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 require_relative 'instance_counter'
 
 class Station
   attr_reader :station
-  STATION_FORMAT=/^[A-Z]/
+
+  STATION_FORMAT = /^[A-Z]/.freeze
 
   include InstanceCounter
   @@station_list = []
@@ -19,21 +22,21 @@ class Station
     register_instance
   end
 
-  def on_trains
-     @station_trains.each { |train| yield(train) }
+  def on_trains(&block)
+    @station_trains.each(&block)
   end
 
   def valid?
     validate!
     true
-  rescue
+  rescue StandardError
     false # возвращаем false, если было исключение
   end
 
   def validate!
-      raise "Введено пустое значение" if station.nil?
-      raise "Введено меньше 6 символов" if station.length < 6
-      raise "не соответствие формату Xxxxxx" if station !~ STATION_FORMAT
+    raise 'Введено пустое значение' if station.nil?
+    raise 'Введено меньше 6 символов' if station.length < 6
+    raise 'не соответствие формату Xxxxxx' if station !~ STATION_FORMAT
   end
 
   def add_train(train)

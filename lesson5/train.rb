@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require_relative 'instance_counter'
 require_relative 'modules'
 
 class Train
   attr_reader :number, :type, :wagon_list
 
-  NUMBER_FORMAT = /^[0-9a-zA-Z]{3}(_+\d{2})*/
+  NUMBER_FORMAT = /^[0-9a-zA-Z]{3}(_+\d{2})*/.freeze
 
   include InstanceCounter
   include Manufacturer
@@ -19,25 +21,25 @@ class Train
     validate!
     @speed = 0
     @@train_list << self
-    @wagon_list=[]
+    @wagon_list = []
     register_instance
   end
 
-  def on_wagon
-     @wagon_list.each { |wagon| yield(wagon) }
+  def on_wagon(&block)
+    @wagon_list.each(&block)
   end
 
   def valid?
     validate!
     true
-  rescue
+  rescue StandardError
     false # возвращаем false, если было исключение
   end
 
   def validate!
-      raise "Введено пустое значение" if number.nil?
-      raise "Введено меньше 3 символов " if number.length < 3
-      raise "Не соответствие формату xxx_xx" if number !~ NUMBER_FORMAT
+    raise 'Введено пустое значение' if number.nil?
+    raise 'Введено меньше 3 символов ' if number.length < 3
+    raise 'Не соответствие формату xxx_xx' if number !~ NUMBER_FORMAT
   end
 
   def speed_change(num)

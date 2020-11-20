@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'instance_counter'
 
 class Route
@@ -12,21 +14,21 @@ class Route
     register_instance
   end
 
-  def on_station
-     @station_list.each { |station| yield(station) }
+  def on_station(&block)
+    @station_list.each(&block)
   end
 
   def valid?
     validate!
     true
-  rescue
+  rescue StandardError
     false # возвращаем false, если было исключение
   end
 
   def validate!
-   raise 'Первая станция не соответствует типу Station' if @finish_station.class != :Station
-   raise 'Последняя станция не соответствует типу Station' if @start_station.class != :Station
- end
+    raise 'Первая станция не соответствует типу Station' if @finish_station.class != :Station
+    raise 'Последняя станция не соответствует типу Station' if @start_station.class != :Station
+  end
 
   def intermediate_station(station)
     @station_list.insert(-2, station)

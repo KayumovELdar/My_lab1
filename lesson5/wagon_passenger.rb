@@ -1,11 +1,12 @@
+# frozen_string_literal: true
+
 require_relative 'wagon'
 
 class WagonPassenger < Wagon
-
-  def initialize(name,seats)
-    @name=name
-    @seats=seats
-    @seats_list=seats
+  def initialize(name, seats)
+    @name = name
+    @seats = seats
+    @seats_list = seats
     validate!
   end
 
@@ -13,8 +14,8 @@ class WagonPassenger < Wagon
     :passenger
   end
 
-  def seat_reserv(number)
-    @seats_list-=1
+  def seat_reserv(_number)
+    @seats_list -= 1
   end
 
   def list_free
@@ -22,12 +23,11 @@ class WagonPassenger < Wagon
   end
 
   def list_reserv
-    @seats-@seats_list
+    @seats - @seats_list
   end
 
   def validate!
-      raise "Введено пустое значение" if @name.nil?
-      raise "число вагонов не может быть отрицательным" if @seats < 0
+    raise 'Введено пустое значение' if @name.nil?
+    raise 'число вагонов не может быть отрицательным' if @seats.negative?
   end
-
 end

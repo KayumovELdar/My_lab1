@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'train'
 require_relative 'station'
 require_relative 'routs'
@@ -11,7 +13,7 @@ class Main
     @train = {}
     @stations = {}
     @routs = {}
-    @wagon ={}
+    @wagon = {}
   end
 
   def menu
@@ -102,8 +104,8 @@ class Main
     print 'namber_key ='
     namber_key = gets.chomp.to_i
     case namber_key
-    when 1 then @wagon[name] = WagonPassenger.new(name,arg)
-    when 2 then @wagon[name] = WagonCargo.new(name,arg)
+    when 1 then @wagon[name] = WagonPassenger.new(name, arg)
+    when 2 then @wagon[name] = WagonCargo.new(name, arg)
     else
       print 'данного ключа не существует'
     end

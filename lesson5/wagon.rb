@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'modules'
 
 class Wagon
@@ -6,7 +8,7 @@ class Wagon
   def valid?
     validate!
     true
-  rescue
+  rescue StandardError
     false # возвращаем false, если было исключение
   end
 end
