@@ -27,22 +27,9 @@ class WagonCargo < Wagon
       @volume-@volume_reserv
   end
 
-  def valid?
-    validate!
-    true
-  rescue
-    false # возвращаем false, если было исключение
-  end
-
   def validate!
       raise "Введено пустое значение" if @name.nil?
       raise "объем не может быть отрицательным" if @volume < 0
       raise "перегруз" if @volume < @volume_reserv
   end
 end
-
-
-def call_block
-  yield('hello', 99)
-end
-call_block {|str, num| puts str + ' ' + num.to_s}
