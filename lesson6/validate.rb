@@ -7,22 +7,11 @@ module Validation
 
   module ClassMethods
 
-    def validation(name, type, arg)
-      @name=name
-      @type=type
-      @arg=arg
-      send "validation_#{type}".to_sym
-    end
-    def validate_type
-       raise 'не соответствие заявленному типу' unless @name.is_a?(@arg)
-    end
-
-    def validate_format
-     raise "#{@name} не соответствует формату" if @name !~ @arg
-    end
-
-    def validate_presence
-       raise"#{@name} пустое значение" unless @name==nil || @name==""
+    def validation(*names, type, args)
+      h=instance_variable_get('@type_list') || []
+      names.each do |name|
+      instance_variable_set('@type_list',h << [type, name,args])
+      end
     end
   end
 
@@ -35,7 +24,38 @@ module Validation
     end
 
     def validate!
-      self.class.validation(name, type, arg)
-    end
+      self.class.instance_variable_get('@type_list').each do |type, name,args|
+        @name=name
+        @args=args
+        #puts "#{type} #{name} #{args}"
+        send"validate_#{type}".to_sym
+      end
+  end
+
+      private
+
+      def validate_type
+        raise 'не соответствие заявленному типу' unless @name.is_a?(@args)
+      end
+
+      def validate_format
+        raise "#{@name} не соответствует формату" if @name !~ @args
+      end
+
+      def validate_presence
+        raise"#{@name} пустое значение" if @name==nil || @name==""
+      end
   end
 end
+
+class Test
+  include Validation
+  validation "CCC", :presence, String
+  validation "ZZZ", :format, /^[0-9a-zA-Z]{3}(_+\d{2})*/
+  validation "CCA", :type, String
+  def initialize
+    validate!
+  end
+end
+
+t=Test.new

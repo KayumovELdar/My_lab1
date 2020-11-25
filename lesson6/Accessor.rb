@@ -22,7 +22,7 @@ module Accessors
         define_method("#{name}_history".to_sym) {instance_variable_get("@#{name}_history") || []}
       end
     end
-    
+
     def strong_attr_accessor(name, type)
         var_name="@#{name}".to_sym
         define_method(name) { instance_variable_get(var_name) }
