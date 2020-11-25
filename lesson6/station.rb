@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 
 require_relative 'instance_counter'
+require_relative 'validate'
 
 class Station
   attr_reader :station
 
-  STATION_FORMAT = /^[A-Z]/.freeze
+  validation :station, :format,  /^[A-Z]/
 
   include InstanceCounter
+  include Validation
   @@station_list = []
 
   def self.all

@@ -10,24 +10,11 @@ class Route
     @start_station = start_station
     @finish_station = finish_station
     @station_list = [@start_station, @finish_station]
-    validate!
     register_instance
   end
 
   def on_station(&block)
     @station_list.each(&block)
-  end
-
-  def valid?
-    validate!
-    true
-  rescue StandardError
-    false # возвращаем false, если было исключение
-  end
-
-  def validate!
-    raise 'Первая станция не соответствует типу Station' if @finish_station.class != :Station
-    raise 'Последняя станция не соответствует типу Station' if @start_station.class != :Station
   end
 
   def intermediate_station(station)
